@@ -1,5 +1,7 @@
 import java.sql.*;
 
+import static com.sun.activation.registries.LogSupport.log;
+
 public class MySQLJava {
 
     private final String jdbcDriverStr;
@@ -14,7 +16,6 @@ public class MySQLJava {
     }
 
     public void readData(String action, String fileName, String fileContent) throws Exception {
-
         try {
             Class.forName(jdbcDriverStr);
             connection = DriverManager.getConnection(jdbcURL);
@@ -31,20 +32,18 @@ public class MySQLJava {
             close();
         }
     }
-
     private void getResultSet(ResultSet resultSet) throws Exception {
         while (resultSet.next()) {
             Integer id = resultSet.getInt(TestTableColumns.id.toString());
             String text = resultSet.getString(TestTableColumns.ACTION.toString());
             String fileName = resultSet.getString(TestTableColumns.FILE_NAME.toString());
             String fileContent = resultSet.getString(TestTableColumns.FILE_CONTENT.toString());
-            System.out.println("id: " + id);
-            System.out.println("text: " + text);
-            System.out.println("file name: " + fileName);
-            System.out.println("file content: " + fileContent);
+            log("id: " + id);
+            log("text: " + text);
+            log("file name: " + fileName);
+            log("file content: " + fileContent);
         }
     }
-
     private void close() {
         try {
             if (resultSet != null) resultSet.close();

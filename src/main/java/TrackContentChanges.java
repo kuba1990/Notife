@@ -6,9 +6,7 @@ public class TrackContentChanges {
 
     public String getChanges(String pathFile) {
         File file = new File(pathFile);
-
         String content = "";
-
         Scanner sc = null;
         try {
             sc = new Scanner(file);
@@ -20,7 +18,6 @@ public class TrackContentChanges {
             String i = sc.next();
             content += i.toString();
         }
-
         return content;
     }
 }
