@@ -13,16 +13,20 @@ public class MySQLJava {
     public MySQLJava(String jdbcDriverStr, String jdbcURL) {
         this.jdbcDriverStr = jdbcDriverStr;
         this.jdbcURL = jdbcURL;
+        //prepare connection object here  
+       
     }
 
     public void readData(String action, String fileName, String fileContent) throws Exception {
         try {
+            
+// remove those lines:
             Class.forName(jdbcDriverStr);
             connection = DriverManager.getConnection(jdbcURL);
             statement = connection.createStatement();
             resultSet = statement.executeQuery("select * from test_table;");
             getResultSet(resultSet);
-
+//
             preparedStatement = connection.prepareStatement("insert into test_table values (DEFAULT ,?,?,?)");
             preparedStatement.setString(1, action);
             preparedStatement.setString(2,fileName);
@@ -52,7 +56,7 @@ public class MySQLJava {
         } catch (Exception e) {
         }
     }
-
+//remote this enum
     enum TestTableColumns {
         id, ACTION, FILE_NAME,FILE_CONTENT
     }
