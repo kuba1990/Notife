@@ -8,13 +8,13 @@ import java.util.function.Consumer;
 import static com.sun.activation.registries.LogSupport.log;
 
 public class Main {
+    
+    //pass this params in String[] args
     public static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
     public static final String MYSQL_URL = "jdbc:mysql://localhost:3306/sys?"
             + "user=root&password=eagles123";
 
-
-
-
+    //pass this param in String[] args
     private static String path = "/home/jwisniowski/Desktop/Notify";
 
     private BlockingQueue<String> sharedQueue = new ArrayBlockingQueue<>(3);
