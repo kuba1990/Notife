@@ -12,6 +12,7 @@ public class NotifyFolder {
     DatabaseRecord databaseRecord = new DatabaseRecord();
     TrackContentChanges trackContentChanges = new TrackContentChanges();
 
+    //change this class to return list of elements
     public List<String> notifyContent(String path) {
         List<String> list = new ArrayList<>();
 
@@ -47,12 +48,14 @@ public class NotifyFolder {
                     @SuppressWarnings("unchecked")
                     WatchEvent<Path> ev = (WatchEvent<Path>) event;
                     Path fileName = ev.context();
-
+                    // put file content here - use path from constructor
+                    //change to enums https://docs.oracle.com/javase/7/docs/api/java/nio/file/StandardWatchEventKinds.html
                     switch (kind.name()) {//event.kind().name())
                         case "OVERFLOW":
                             log("WARNING SYSTEM OVERFLOWED");
                             break;
                         case "ENTRY_MODIFY":
+                            //
                             String content = trackContentChanges.getChanges("/home/jwisniowski/Desktop/Notify/" + fileName.toString());
                             System.out.println("ENTRY_MODIFY" + ": " + "  WHAT FILE " + fileName + "  WHAT CONTENT " + content);
                             databaseRecord.modify("MODIFY", fileName.toString(), content);
