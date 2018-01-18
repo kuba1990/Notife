@@ -14,6 +14,7 @@ public class TrackContentChanges {
             e.printStackTrace();
         }
 
+        //move this wile loop into try claus
         while (sc.hasNext()) {
             String i = sc.next();
             content += i.toString();
