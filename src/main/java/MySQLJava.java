@@ -17,6 +17,7 @@ public class MySQLJava {
        
     }
 
+    //change name of this fc
     public void readData(String action, String fileName, String fileContent) throws Exception {
         try {
             
@@ -36,6 +37,8 @@ public class MySQLJava {
             close();
         }
     }
+    
+    // dont know what you would like to achive
     private void getResultSet(ResultSet resultSet) throws Exception {
         while (resultSet.next()) {
             Integer id = resultSet.getInt(TestTableColumns.id.toString());
