@@ -15,6 +15,7 @@ public class Main {
 
     //pass this param in String[] args
     private static String path = "/home/jwisniowski/Desktop/Notify";
+    static String abc;
 
     public static void main(String[] args) throws Exception {
 
@@ -63,6 +64,7 @@ public class Main {
     }
 
 private static void producer() throws InterruptedException {
+
         NotifyFolder notifyFolder = new NotifyFolder();
         notifyFolder.notify(path);//radar path
         }

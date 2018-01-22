@@ -1,4 +1,7 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class MySQLJava {
 
@@ -12,20 +15,21 @@ public class MySQLJava {
     public MySQLJava(String jdbcDriverStr, String jdbcURL) {
         this.jdbcDriverStr = jdbcDriverStr;
         this.jdbcURL = jdbcURL;
-        //prepare connection object here
 
+        //prepare connection object here
     }
 
     //change name of this fc
     public void readData(String action, String fileName, String fileContent) throws Exception {
         try {
 
-/*// remove those lines:
-            Class.forName(jdbcDriverStr);
-            connection = DriverManager.getConnection(jdbcURL);*/
             statement = connection.createStatement();
             resultSet = statement.executeQuery("select * from test_table;");
+
             /* getResultSet(resultSet);*/
+
+            getResultSet(resultSet);
+
 //
             preparedStatement = connection.prepareStatement("insert into test_table values (DEFAULT ,?,?,?)");
             preparedStatement.setString(1, action);
@@ -38,6 +42,17 @@ public class MySQLJava {
     }
 
 
+    // dont know what you would like to achive
+    private void getResultSet(ResultSet resultSet) throws Exception {
+        while (resultSet.next()) {
+            Integer id = resultSet.getInt(TestTableColumns.id.toString());
+            String text = resultSet.getString(TestTableColumns.ACTION.toString());
+            String fileName = resultSet.getString(TestTableColumns.FILE_NAME.toString());
+            String fileContent = resultSet.getString(TestTableColumns.FILE_CONTENT.toString());
+
+        }
+    }
+
     private void close() {
         try {
             if (resultSet != null) resultSet.close();
@@ -46,4 +61,10 @@ public class MySQLJava {
         } catch (Exception e) {
         }
     }
+
+    //remote this enum
+    enum TestTableColumns {
+        id, ACTION, FILE_NAME, FILE_CONTENT
+    }
+
 }
