@@ -20,4 +20,5 @@ public class TrackContentChanges {
         }
         return content;
     }
+
 }
