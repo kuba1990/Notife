@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class TrackContentChanges {
+public class ContentReader {
 
     public String getChanges(String pathFile) {
         File file = new File(pathFile);
@@ -10,15 +10,14 @@ public class TrackContentChanges {
         Scanner sc = null;
         try {
             sc = new Scanner(file);
+            while (sc.hasNext()) {
+                String i = sc.next();
+                content += i.toString();
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        //move this wile loop into try claus
-        while (sc.hasNext()) {
-            String i = sc.next();
-            content += i.toString();
-        }
+        sc.close();
         return content;
     }
 }

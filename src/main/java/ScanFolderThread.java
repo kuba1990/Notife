@@ -4,15 +4,17 @@ import java.nio.file.*;
 import static com.sun.activation.registries.LogSupport.log;
 import static java.nio.file.StandardWatchEventKinds.*;
 
-public class NotifyFolder {
+public class ScanFolderThread extends Thread {
 
-    DatabaseRecord databaseRecord = new DatabaseRecord();
-    TrackContentChanges trackContentChanges = new TrackContentChanges();
+    private static final String PATH = "/home/jwisniowski/Desktop/Notify/";
+    private ContentReader contentChanges = new ContentReader();
 
-    public void notify(String path) {
+       public void run() {
+
         try {
             WatchService watcher = FileSystems.getDefault().newWatchService();
-            Path dir = Paths.get(path);
+            Path dir = Paths.get(PATH);
+
             dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 
             System.out.println("Watch Service registered for dir: " + dir.getFileName());
@@ -30,30 +32,27 @@ public class NotifyFolder {
                     @SuppressWarnings("unchecked")
                     WatchEvent<Path> ev = (WatchEvent<Path>) event;
                     Path fileName = ev.context();
-                    // put file content here - use path from constructor
-                    //change to enums https://docs.oracle.com/javase/7/docs/api/java/nio/file/StandardWatchEventKinds.html
+
+
                     switch (kind.name()) {//event.kind().name())
                         case "OVERFLOW":
                             log("WARNING SYSTEM OVERFLOWED");
                             break;
                         case "ENTRY_MODIFY":
-                            //
-                            String content = trackContentChanges.getChanges("/home/jwisniowski/Desktop/Notify/" + fileName.toString());
-                            System.out.println("ENTRY_MODIFY" + ": " + "  WHAT FILE " + fileName + "  WHAT CONTENT " + content);
-                            databaseRecord.databaseCrud("MODIFY", fileName.toString(), content);
-                            log("file was modifed" + fileName.toString());
+                            String content = contentChanges.getChanges(PATH + fileName.toString());
+                            QueueNotify actionFileContentModify = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), content);
+                            Queue.sharedQueue.put(actionFileContentModify);
                             break;
 
                         case "ENTRY_CREATE":
-                            String contentCreate = trackContentChanges.getChanges("/home/jwisniowski/Desktop/Notify/" + fileName.toString());
-                            System.out.println("ENTRY_CREATE" + ": " + "  WHAT FILE " + fileName + "  WHAT CONTENT " + contentCreate);
-                            databaseRecord.databaseCrud("CREATE", fileName.toString(), contentCreate);
-                            log("file was create" + fileName.toString());
+                            String contentCreate = contentChanges.getChanges(PATH + fileName.toString());
+                            QueueNotify actionFileContentCreate = new ActionNameContent("ENTRY_CREATE", fileName.toString(), contentCreate);
+                            Queue.sharedQueue.put(actionFileContentCreate);
                             break;
 
                         case "ENTRY_DELETE":
-                            System.out.println("ENTRY_DELETE" + ": " + "  WHAT FILE " + fileName);
-                            databaseRecord.databaseCrud("DELETE", fileName.toString(), "null");
+                            QueueNotify actionFileContentDelete = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), null);
+                            Queue.sharedQueue.put(actionFileContentDelete);
                             break;
                     }
                     boolean valid = key.reset();
@@ -61,9 +60,17 @@ public class NotifyFolder {
                         break;
                     }
                 }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 }
+
