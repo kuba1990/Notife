@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74ecb677-7834-4774-b8bc-01fd1c99029c" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ActionNameContent.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/DatabaseConsumerThread.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Queue.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/QueueNotify.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ScanFolderThread.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseRecord.java" afterPath="" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" afterPath="$PROJECT_DIR$/src/main/java/Main.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MySQLJava.java" afterPath="$PROJECT_DIR$/src/main/java/MySQLJava.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/NotifyFolder.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TrackContentChanges.java" afterPath="$PROJECT_DIR$/src/main/java/ContentReader.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseRecord.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main$2.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" afterPath="$PROJECT_DIR$/target/classes/Main.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/MySQLJava$TestTableColumns.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/MySQLJava.class" afterPath="$PROJECT_DIR$/target/classes/MySQLJava.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/NotifyFolder.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TrackContentChanges.class" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,14 +14,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ActionNameContent.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ActionNameContent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ActionNameContent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+            <state relative-caret-position="324">
+              <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
               <folding>
                 <element signature="e#349#350#0" expanded="true" />
                 <element signature="e#378#379#0" expanded="true" />
@@ -203,7 +181,6 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseRecord.java" />
         <option value="$PROJECT_DIR$/src/main/java/NotifyFolder.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseConsumerThread.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/TrackContentChanges.java" />
         <option value="$PROJECT_DIR$/src/main/java/ContentReader.java" />
         <option value="$PROJECT_DIR$/src/main/java/ActionFileContent.java" />
@@ -211,6 +188,7 @@
         <option value="$PROJECT_DIR$/src/main/java/MySQLJava.java" />
         <option value="$PROJECT_DIR$/src/main/java/Queue.java" />
         <option value="$PROJECT_DIR$/src/main/java/ScanFolderThread.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Main.java" />
       </list>
     </option>
   </component>
@@ -411,12 +389,12 @@
       <workItem from="1516704295072" duration="16000" />
       <workItem from="1516704384333" duration="6445000" />
       <workItem from="1516727008471" duration="19762000" />
-      <workItem from="1516905862134" duration="170000" />
+      <workItem from="1516905862134" duration="635000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26393000" />
+    <option name="totallyTimeSpent" value="26858000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="240" width="1920" height="1025" extended-state="6" />
@@ -501,9 +479,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -664,16 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseConsumerThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -696,8 +662,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ActionNameContent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+        <state relative-caret-position="324">
+          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding>
             <element signature="e#349#350#0" expanded="true" />
             <element signature="e#378#379#0" expanded="true" />
@@ -706,6 +672,14 @@
             <element signature="e#496#497#0" expanded="true" />
             <element signature="e#526#527#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
