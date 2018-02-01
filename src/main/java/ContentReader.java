@@ -1,23 +1,25 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 public class ContentReader {
 
-    public String getChanges(String pathFile) {
-        File file = new File(pathFile);
-        String content = "";
-        Scanner sc = null;
+    public String getChanges(String pathFile) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(pathFile));
         try {
-            sc = new Scanner(file);
-            while (sc.hasNext()) {
-                String i = sc.next();
-                content += i.toString();
+            StringBuilder content = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                content.append(line);
+                content.append("\n");
+                line = br.readLine();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return content.toString();
+
+        } finally {
+            br.close();
         }
-        sc.close();
-        return content;
-    }
+   }
+
+
+
 }

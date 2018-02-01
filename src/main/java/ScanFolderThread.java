@@ -42,17 +42,21 @@ public class ScanFolderThread extends Thread {
                             String content = contentChanges.getChanges(PATH + fileName.toString());
                             QueueNotify actionFileContentModify = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), content);
                             Queue.sharedQueue.put(actionFileContentModify);
+                            System.out.println(content);
                             break;
 
                         case "ENTRY_CREATE":
                             String contentCreate = contentChanges.getChanges(PATH + fileName.toString());
                             QueueNotify actionFileContentCreate = new ActionNameContent("ENTRY_CREATE", fileName.toString(), contentCreate);
+                            System.out.println(contentCreate);
+
                             Queue.sharedQueue.put(actionFileContentCreate);
                             break;
 
                         case "ENTRY_DELETE":
                             QueueNotify actionFileContentDelete = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), null);
                             Queue.sharedQueue.put(actionFileContentDelete);
+
                             break;
                     }
                     boolean valid = key.reset();
