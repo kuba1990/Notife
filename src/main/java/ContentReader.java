@@ -1,5 +1,6 @@
-import java.io.*;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class ContentReader {
 
@@ -18,8 +19,5 @@ public class ContentReader {
         } finally {
             br.close();
         }
-   }
-
-
-
+    }
 }
