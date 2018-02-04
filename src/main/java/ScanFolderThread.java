@@ -9,15 +9,10 @@ public class ScanFolderThread extends Thread {
     private static final String PATH = "/home/jwisniowski/Desktop/Notify/";
     private ContentReader contentChanges = new ContentReader();
 
-       public void run() {
+    public void run() {
 
         try {
-            WatchService watcher = FileSystems.getDefault().newWatchService();
-            Path dir = Paths.get(PATH);
-
-            dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-
-            System.out.println("Watch Service registered for dir: " + dir.getFileName());
+            WatchService watcher = getWatchService();
 
             while (true) {
                 WatchKey key;
@@ -32,32 +27,20 @@ public class ScanFolderThread extends Thread {
                     @SuppressWarnings("unchecked")
                     WatchEvent<Path> ev = (WatchEvent<Path>) event;
                     Path fileName = ev.context();
-
-
                     switch (kind.name()) {//event.kind().name())
                         case "OVERFLOW":
-                            log("WARNING SYSTEM OVERFLOWED");
+                            reportOverflow();
                             break;
                         case "ENTRY_MODIFY":
-                            String content = contentChanges.getChanges(PATH + fileName.toString());
-                            QueueNotify actionFileContentModify = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), content);
-                            Queue.sharedQueue.put(actionFileContentModify);
-                            System.out.println(content);
+                            modify(fileName);
                             break;
 
                         case "ENTRY_CREATE":
-                            String contentCreate = contentChanges.getChanges(PATH + fileName.toString());
-                            QueueNotify actionFileContentCreate = new ActionNameContent("ENTRY_CREATE", fileName.toString(), contentCreate);
-                            System.out.println(contentCreate);
-
-                            Queue.sharedQueue.put(actionFileContentCreate);
+                            Create(fileName);
                             break;
 
                         case "ENTRY_DELETE":
-                            QueueNotify actionFileContentDelete = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), null);
-                            Queue.sharedQueue.put(actionFileContentDelete);
-
-                            break;
+                            Delete(fileName);
                     }
                     boolean valid = key.reset();
                     if (!valid) {
@@ -75,6 +58,44 @@ public class ScanFolderThread extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private WatchService getWatchService() throws IOException {
+        WatchService watcher = FileSystems.getDefault().newWatchService();
+        Path dir = Paths.get(PATH);
+
+        dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+
+        System.out.println("Watch Service registered for dir: " + dir.getFileName());
+        return watcher;
+    }
+
+
+    private void reportOverflow() {
+        log("WARNING SYSTEM OVERFLOWED");
+    }
+
+    private void modify(Path fileName) throws IOException, InterruptedException {
+        String content = contentChanges.getChanges(PATH + fileName.toString());
+        QueueNotify actionFileContentModify = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), content);
+        Queue.sharedQueue.put(actionFileContentModify);
+
+        System.out.println(content);
+    }
+
+    private void Create(Path fileName) throws IOException, InterruptedException {
+        String contentCreate = contentChanges.getChanges(PATH + fileName.toString());
+        QueueNotify actionFileContentCreate = new ActionNameContent("ENTRY_CREATE", fileName.toString(), contentCreate);
+        System.out.println(contentCreate);
+
+        Queue.sharedQueue.put(actionFileContentCreate);
+
+
+    }
+
+    private void Delete(Path fileName) throws InterruptedException {
+        QueueNotify actionFileContentDelete = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), null);
+        Queue.sharedQueue.put(actionFileContentDelete);
     }
 }
 
