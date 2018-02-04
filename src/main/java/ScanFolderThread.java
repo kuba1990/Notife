@@ -5,8 +5,11 @@ import static com.sun.activation.registries.LogSupport.log;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 public class ScanFolderThread extends Thread {
+    Main main = new Main();
+    public final String DIR = main.dirNotify;
+    private static final String PATH = "/home/jwisniowski/Desktop/Notify/"; //DIR
 
-    private static final String PATH = "/home/jwisniowski/Desktop/Notify/";
+    Queue myQueue = new Queue();
     private ContentReader contentChanges = new ContentReader();
 
     public void run() {
@@ -70,7 +73,6 @@ public class ScanFolderThread extends Thread {
         return watcher;
     }
 
-
     private void reportOverflow() {
         log("WARNING SYSTEM OVERFLOWED");
     }
@@ -78,7 +80,7 @@ public class ScanFolderThread extends Thread {
     private void modify(Path fileName) throws IOException, InterruptedException {
         String content = contentChanges.getChanges(PATH + fileName.toString());
         QueueNotify actionFileContentModify = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), content);
-        Queue.sharedQueue.put(actionFileContentModify);
+        myQueue.sharedQueue.put(actionFileContentModify);
 
         System.out.println(content);
     }
@@ -88,14 +90,23 @@ public class ScanFolderThread extends Thread {
         QueueNotify actionFileContentCreate = new ActionNameContent("ENTRY_CREATE", fileName.toString(), contentCreate);
         System.out.println(contentCreate);
 
-        Queue.sharedQueue.put(actionFileContentCreate);
-
+        myQueue.sharedQueue.put(actionFileContentCreate);
 
     }
 
     private void Delete(Path fileName) throws InterruptedException {
         QueueNotify actionFileContentDelete = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), null);
-        Queue.sharedQueue.put(actionFileContentDelete);
+        myQueue.sharedQueue.put(actionFileContentDelete);
     }
-}
 
+   // public enum event{
+        //http://jpathwatch.sourceforge.net/name/pachler/nio/file/StandardWatchEventKind.html
+        //https://stackoverflow.com/questions/34671792/java-7-watch-service-entry-create-triggered-before-file-is-written
+    //https://4programmers.net/Java/Enum
+
+       /* ENTRY_DELETE
+        ENTRY_CREATE
+                ENTRY_MODIFY
+        OVERFLOW*/
+    //}
+}

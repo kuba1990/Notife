@@ -2,18 +2,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class DatabaseConsumerThread extends Thread {
+
+    Main main = new Main();
+
+    public final String PASSWORD = main.passwordToDatabase;
     public static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
     public static final String MYSQL_URL = "jdbc:mysql://localhost:3306/sys?"
-            + "user=root&password=eagles123";
-    Queue myQueue = new Queue();
+            + "user=root&password=eagles123"; //+PASSWORD
+
     private MySQLJava db = new MySQLJava(MYSQL_DRIVER, MYSQL_URL);
 
+    Queue myQueue = new Queue();
+
+
     public void run() {
-
-
         QueueNotify actionFileContent = null;
         try {
-            actionFileContent = Queue.sharedQueue.take();
+            actionFileContent = myQueue.sharedQueue.take();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
