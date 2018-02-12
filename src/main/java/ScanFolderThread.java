@@ -1,17 +1,24 @@
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.logging.Logger;
 
 import static com.sun.activation.registries.LogSupport.log;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 public class ScanFolderThread extends Thread {
-    Main main = new Main();
-    public final String DIR = main.dirNotify;
+
     private static final String PATH = "/home/jwisniowski/Desktop/Notify/"; //DIR
-
-    Queue myQueue = new Queue();
     private ContentReader contentChanges = new ContentReader();
+    private static Logger LOGGER = Logger.getLogger("InfoLogging");
 
+    BlockingQueue<QueueNotify> sharedQueue;
+    String dirNotify;
+
+    public ScanFolderThread(BlockingQueue<QueueNotify> sharedQueue, String dirNotify) {
+        this.sharedQueue= sharedQueue;
+        this.dirNotify= dirNotify;
+    }
     public void run() {
 
         try {
@@ -33,6 +40,7 @@ public class ScanFolderThread extends Thread {
                     switch (kind.name()) {//event.kind().name())
                         case "OVERFLOW":
                             reportOverflow();
+
                             break;
                         case "ENTRY_MODIFY":
                             modify(fileName);
@@ -58,17 +66,16 @@ public class ScanFolderThread extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
     private WatchService getWatchService() throws IOException {
         WatchService watcher = FileSystems.getDefault().newWatchService();
+        //can be change to dirNotify
         Path dir = Paths.get(PATH);
-
         dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-
         System.out.println("Watch Service registered for dir: " + dir.getFileName());
         return watcher;
     }
@@ -80,8 +87,8 @@ public class ScanFolderThread extends Thread {
     private void modify(Path fileName) throws IOException, InterruptedException {
         String content = contentChanges.getChanges(PATH + fileName.toString());
         QueueNotify actionFileContentModify = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), content);
-        myQueue.sharedQueue.put(actionFileContentModify);
-
+        sharedQueue.put(actionFileContentModify);
+        LOGGER.info("file: " + PATH + " modified");
         System.out.println(content);
     }
 
@@ -89,24 +96,15 @@ public class ScanFolderThread extends Thread {
         String contentCreate = contentChanges.getChanges(PATH + fileName.toString());
         QueueNotify actionFileContentCreate = new ActionNameContent("ENTRY_CREATE", fileName.toString(), contentCreate);
         System.out.println(contentCreate);
-
-        myQueue.sharedQueue.put(actionFileContentCreate);
+        LOGGER.info("file: " + PATH + " created");
+        sharedQueue.put(actionFileContentCreate);
 
     }
 
     private void Delete(Path fileName) throws InterruptedException {
         QueueNotify actionFileContentDelete = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), null);
-        myQueue.sharedQueue.put(actionFileContentDelete);
+        sharedQueue.put(actionFileContentDelete);
+        LOGGER.info("file: " + PATH + " deleted");
+
     }
-
-   // public enum event{
-        //http://jpathwatch.sourceforge.net/name/pachler/nio/file/StandardWatchEventKind.html
-        //https://stackoverflow.com/questions/34671792/java-7-watch-service-entry-create-triggered-before-file-is-written
-    //https://4programmers.net/Java/Enum
-
-       /* ENTRY_DELETE
-        ENTRY_CREATE
-                ENTRY_MODIFY
-        OVERFLOW*/
-    //}
 }

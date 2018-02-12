@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class MySQLJava {
+
     private static Logger LOGGER = Logger.getLogger("InfoLogging");
 
     private final String jdbcDriverStr;
@@ -18,7 +19,7 @@ public class MySQLJava {
 
     }
     public Connection connect() throws ClassNotFoundException, SQLException {
-      /*  Class.forName(jdbcDriverStr);*/
+      Class.forName(jdbcDriverStr);
         Connection connection = DriverManager.getConnection(jdbcURL);
         return connection;
     }
@@ -37,7 +38,6 @@ public class MySQLJava {
             if (preparedStatement != null) preparedStatement.close();
             if (connection != null) connection.close();
         } catch (Exception e) {
-           //TODO
             LOGGER.info(e + "connection lost ");
 
         }
