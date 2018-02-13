@@ -12,7 +12,6 @@ public class MySQLJava {
     private final String jdbcURL;
     private PreparedStatement preparedStatement;
 
-
     public MySQLJava(String jdbcDriverStr, String jdbcURL) {
         this.jdbcDriverStr = jdbcDriverStr;
         this.jdbcURL = jdbcURL;

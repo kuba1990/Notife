@@ -15,31 +15,3 @@ public class ContentReader {
         return content = sb.toString();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-       /* BufferedReader br = new BufferedReader(new FileReader(pathFile));
-        try {
-            StringBuilder content = new StringBuilder();
-            String line = br.readLine();
-            while (line != null) {
-                content.append(line);
-                content.append("\n");
-                line = br.readLine();
-            }
-            return content.toString();
-
-        } finally {
-            br.close();
-        }
-    }*/
-//}

@@ -8,6 +8,14 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        PropertiesProgram propertiesProgram = new PropertiesProgram();
+
+        if (args.length == 0) {
+            System.out.println("Proper Usage is: path dir");
+        }
+       dirNotify = propertiesProgram.setPath(args[0]);
+
+
         BlockingQueue<QueueNotify> sharedQueue = new ArrayBlockingQueue<>(99);
 
         Thread scanFolderThread = new ScanFolderThread(sharedQueue,dirNotify);
@@ -15,17 +23,5 @@ public class Main {
 
         Thread databaseConsumer = new DatabaseConsumerThread(sharedQueue,passwordToDatabase);
         databaseConsumer.start();
-
         }
-
-    private static void setupProgram(String[] args) {
-        while (args.length == 0)
-        {
-            System.out.println("Proper Usage is: Database password and path dir");
-            System.exit(0);
-        }
-        passwordToDatabase =  args[0];
-        dirNotify=  args[1];
-
-    }
 }

@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SQL_testProject" />
+        <module name="NotiferExpert" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SQL_testProject" target="1.8" />
+      <module name="NotiferExpert" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

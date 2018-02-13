@@ -4,7 +4,6 @@ import java.util.concurrent.BlockingQueue;
 
 public class DatabaseConsumerThread extends Thread {
 
-    //TODO
     private final String dbPassword;
     private static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
     private static final String MYSQL_URL = "jdbc:mysql://localhost:3306/sys?"
@@ -21,7 +20,6 @@ public class DatabaseConsumerThread extends Thread {
 
     public void run() {
         while (true) {
-            //Wstrzymywanie i przerywanie wątku
             QueueNotify actionFileContent = null;
             try {
                 actionFileContent = sharedQueue.take();
