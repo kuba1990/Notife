@@ -7,14 +7,10 @@ import static com.sun.activation.registries.LogSupport.log;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 public class ScanFolderThread extends Thread {
-
-    /*private static final String PATH = "/home/jwisniowski/Desktop/Notify/";*/
-
     private static Logger LOGGER = Logger.getLogger("InfoLogging");
     BlockingQueue<QueueNotify> sharedQueue;
     String dirNotify;
     private ContentReader contentChanges = new ContentReader();
-
 
     public ScanFolderThread(BlockingQueue<QueueNotify> sharedQueue, String dirNotify) {
         this.sharedQueue = sharedQueue;
@@ -22,7 +18,6 @@ public class ScanFolderThread extends Thread {
 
     }
     public void run() {
-
         try {
             WatchService watcher = getWatchService();
 
@@ -49,21 +44,16 @@ public class ScanFolderThread extends Thread {
                             break;
 
                         case "ENTRY_CREATE":
-                            Create(fileName);
+                            create(fileName);
                             break;
 
                         case "ENTRY_DELETE":
-                            Delete(fileName);
+                            delete(fileName);
                     }
                     boolean valid = key.reset();
                     if (!valid) {
                         break;
                     }
-                }
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         } catch (IOException e) {
@@ -73,38 +63,30 @@ public class ScanFolderThread extends Thread {
             e.printStackTrace();
         }
     }
-
     private WatchService getWatchService() throws IOException {
         WatchService watcher = FileSystems.getDefault().newWatchService();
-        //can be change to dirNotify
         Path dir = Paths.get(dirNotify);
         dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-        System.out.println("Watch Service registered for dir: " + dir.getFileName());
         return watcher;
     }
-
     private void reportOverflow() {
-        log("WARNING SYSTEM OVERFLOWED");
+        LOGGER.info("WARNING SYSTEM OVERFLOWED");
     }
 
     private void modify(Path fileName) throws IOException, InterruptedException {
-        String content = contentChanges.getChanges(dirNotify + fileName.toString());
+        String content = contentChanges.readContent(dirNotify + fileName.toString());
         QueueNotify actionFileContentModify = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), content);
         sharedQueue.put(actionFileContentModify);
         LOGGER.info("file: " + dirNotify + " modified");
-        System.out.println(content);
     }
-
-    private void Create(Path fileName) throws IOException, InterruptedException {
-        String contentCreate = contentChanges.getChanges(dirNotify + fileName.toString());
+    private void create(Path fileName) throws IOException, InterruptedException {
+        String contentCreate = contentChanges.readContent(dirNotify + fileName.toString());
         QueueNotify actionFileContentCreate = new ActionNameContent("ENTRY_CREATE", fileName.toString(), contentCreate);
-        System.out.println(contentCreate);
         LOGGER.info("file: " + dirNotify + " created");
         sharedQueue.put(actionFileContentCreate);
 
     }
-
-    private void Delete(Path fileName) throws InterruptedException {
+    private void delete(Path fileName) throws InterruptedException {
         QueueNotify actionFileContentDelete = new ActionNameContent("ENTRY_MODIFY", fileName.toString(), null);
         sharedQueue.put(actionFileContentDelete);
         LOGGER.info("file: " + dirNotify + " deleted");

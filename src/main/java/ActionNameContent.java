@@ -1,4 +1,4 @@
-public class ActionNameContent implements QueueNotify{
+public class ActionNameContent implements QueueNotify {
     private String action;
     private String name;
     private String content;
@@ -8,14 +8,17 @@ public class ActionNameContent implements QueueNotify{
         this.name = name;
         this.content = content;
     }
+
     @Override
     public String getAction() {
         return action;
     }
+
     @Override
     public String getName() {
         return name;
     }
+
     @Override
     public String getContent() {
         return content;
